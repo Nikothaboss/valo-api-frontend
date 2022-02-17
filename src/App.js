@@ -12,18 +12,28 @@ function App() {
       .then((res) => setData(res.data.data))
   }, []);
 
-  // const abilities = data[0].attributes.abilities.data
-  // data.length > 0 && console.log(data[0].attributes.abilities.data)
+
   return (
     <div className="App">
-      {data.length > 0 ? data.map(d => {
+      {data.length > 0 ? data.map((d, index) => {
         return (
-          <h1>{d.attributes.name}</h1>
+          <div key={index} className="card" >
+            <div className="card-top">
+              <img className="character-img" src={d.attributes.image_url} alt={d.attributes.name} />
+              <h2 className="char-name">{d.attributes.name}</h2>
+            </div>
+          <div className="abilities-container">
+            {d.attributes.abilities.data.map((ability, idx) => (
+              <div key={idx} className="abilities">
+                <img className="icon" src={ability.attributes.icon_url} alt={ability.attributes.name + "icon"} />
+                <h2>{ability.attributes.name}</h2>
+              </div>
+            ))}
+          </div>
+          </div>
         )
       }) : null }
-      {data.length > 0 ? data[0].attributes.abilities.data.map(d => (
-        <h1>{d.attributes.Name}</h1>
-      )) : null }
+      
     </div>
   );
 }
